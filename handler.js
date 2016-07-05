@@ -5,8 +5,6 @@ const Rx      = require('rxjs/Rx');
 const Boom    = require('boom');
 const Stylus  = require('stylus');
 
-const rxStylus = Rx.Observable.bindNodeCallback(Stylus.render);
-
 module.exports = function (request, reply){
 
     const getError = status => {
@@ -76,23 +74,36 @@ module.exports = function (request, reply){
 
     const bundle_file$ = file$
         .filter(file => file.type == 'bundle')
-        .mergeMap(file => {
+        .mergeMap(file => Rx.Observable.create(observer => {
+
             const options = this.options.stylus || {};
-            options.engine = this.util
-                .object({
-                    filename  : file.path,
-                    use       : [],
-                    globals   : {},
-                    paths     : [file.root, this.path.app.bundles],
-                    sourcemap : false
-                })
-                .merge(options.engine || {});
-            return rxStylus(file.body.toString('utf8'), options.engine)
-                .map(body => {
-                    file.body = body;
-                    return file;
-                })
-        });
+
+            if (!this.util.is(options.engine).array()) options.engine = [];
+            if (!this.util.is(options.path).array()) options.path = [];
+
+            let stylus = Stylus(file.body.toString('utf8')).set('filename', file.path);
+
+            for (let i in options.engine) {
+                let option = options.engine[i];
+                if (!this.util.is(stylus[option.name]).function())
+                    return observer.error(this.error.type({
+                        name: 'plugins.stylus',
+                        type: 'valid options',
+                        data: stylus[option.name]
+                    }));
+                stylus = stylus[option.name].apply(stylus, option.args || []);
+            }
+            // const paths = stylus.options.paths
+            //     .concat([file.root, this.path.app.bundles])
+            //     .concat(options.path)
+
+            stylus.render((err, css) => {
+                if (err) return observer.error(err);
+                file.body = css;
+                observer.next(file);
+                observer.complete();
+            })
+        }));
 
     Rx.Observable
         .merge(static_file$, bundle_file$)
