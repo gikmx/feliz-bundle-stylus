@@ -1,14 +1,26 @@
 {
   "name": "hapi-rx-stylus",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "A plugin for hapi-rx that enables stylus rendering.",
   "main": "index.js",
+  "author": "Héctor Menéndez <etor@gik.mx>",
+  "license": "MIT",
+  "analyze": true,
+  "keywords": [
+    "hapi-rx",
+    "plugin",
+    "stylus"
+  ],
+  "repository":{
+    "type": "git",
+    "url" : "https://github.com/gikmx/hapi-rx-stylus"
+  },
+  "bugs":{
+    "url": "https://github.com/gikmx/hapi-rx-stylus/issues"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "boom": "^3.2.2",
     "hapi": "^13.4.2",
