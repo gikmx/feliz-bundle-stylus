@@ -1,6 +1,6 @@
 {
   "name": "hapi-rx-stylus",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A plugin for hapi-rx that enables stylus rendering.",
   "main": "index.js",
   "author": "Héctor Menéndez <etor@gik.mx>",

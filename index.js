@@ -13,9 +13,11 @@ module.exports = {
         }
     },
     when: { 'plugin:stylus': function(){
+        const options = this.options.stylus || {};
+        options.route = options.route || '/static/css';
         this.server.route({
             method  : 'GET',
-            path    : '/static/css/{filename*}',
+            path    : `${options.route}/{filename*}`,
             config  : {
                 validate: {
                     params: {

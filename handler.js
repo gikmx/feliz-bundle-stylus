@@ -77,14 +77,17 @@ module.exports = function (request, reply){
     const bundle_file$ = file$
         .filter(file => file.type == 'bundle')
         .mergeMap(file => {
-            let options = {
-                filename: file.path,
-                use     : [],
-                globals : {},
-                paths   : [file.root, this.path.app.bundles],
-                sourcemap : false
-            };
-            return rxStylus(file.body.toString('utf8'), options)
+            const options = this.options.stylus || {};
+            options.engine = this.util
+                .object({
+                    filename  : file.path,
+                    use       : [],
+                    globals   : {},
+                    paths     : [file.root, this.path.app.bundles],
+                    sourcemap : false
+                })
+                .merge(options.engine || {});
+            return rxStylus(file.body.toString('utf8'), options.engine)
                 .map(body => {
                     file.body = body;
                     return file;
