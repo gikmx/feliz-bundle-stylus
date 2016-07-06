@@ -1,22 +1,22 @@
 {
-  "name": "hapi-rx-stylus",
+  "name": "feliz-stylus",
   "version": "0.0.3",
-  "description": "A plugin for hapi-rx that enables stylus rendering.",
+  "description": "A plugin for feliz.js that enables stylus rendering.",
   "main": "index.js",
   "author": "Héctor Menéndez <etor@gik.mx>",
   "license": "MIT",
   "analyze": true,
   "keywords": [
-    "hapi-rx",
+    "feliz",
     "plugin",
     "stylus"
   ],
   "repository":{
     "type": "git",
-    "url" : "https://github.com/gikmx/hapi-rx-stylus"
+    "url" : "https://github.com/gikmx/feliz-stylus"
   },
   "bugs":{
-    "url": "https://github.com/gikmx/hapi-rx-stylus/issues"
+    "url": "https://github.com/gikmx/feliz-stylus/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

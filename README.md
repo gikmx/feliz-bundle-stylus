@@ -1,3 +1,3 @@
-# HapiRx-Stylus
+# feliz-stylus
 
-Documentation pending.
+A plugin for feliz.js that enables stylus rendering.
