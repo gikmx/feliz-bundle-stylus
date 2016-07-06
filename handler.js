@@ -7,12 +7,10 @@ const Stylus  = require('stylus');
 
 module.exports = function (request, reply){
 
-    const getError = status => {
-        const error = new Error();
-        error.statusCode = status || 500;
-        return error;
-    };
+    const options = this.options.stylus || {};
+    options.index = !this.util.is(options.index).string()? 'index' : options.index;
 
+    // TODO: This code assumes there's a static path declared.
     const param$ = Rx.Observable
         .of(PATH.normalize(request.params.filename))
         // if there's a leading `~` a bundle is being required
@@ -48,7 +46,7 @@ module.exports = function (request, reply){
                 if (!isdir) param.path += '.styl';
                 else {
                     param.root = param.path;
-                    param.path = PATH.join(param.path, 'index.styl');
+                    param.path = PATH.join(param.path, options.index + '.styl');
                 }
                 param.util = this.util.rx.path(param.path);
                 return param;
@@ -59,7 +57,11 @@ module.exports = function (request, reply){
         .mergeMap(param => param.util
             .isFile()
             .mergeMap(isfile => {
-                if (!isfile) throw getError(404);
+                if (!isfile) {
+                    const err = this.error('Not Found');
+                    err.statusCode = 404;
+                    throw err;
+                }
                 return param.util.read()
             })
             .map(body => {
@@ -75,8 +77,6 @@ module.exports = function (request, reply){
     const bundle_file$ = file$
         .filter(file => file.type == 'bundle')
         .mergeMap(file => Rx.Observable.create(observer => {
-
-            const options = this.options.stylus || {};
 
             if (!this.util.is(options.engine).array()) options.engine = [];
             if (!this.util.is(options.path).array()) options.path = [];

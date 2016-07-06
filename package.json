@@ -1,6 +1,6 @@
 {
   "name": "feliz-stylus",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A plugin for feliz.js that enables stylus rendering.",
   "main": "index.js",
   "author": "Héctor Menéndez <etor@gik.mx>",
