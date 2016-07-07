@@ -1,5 +1,5 @@
 {
-  "name": "feliz-stylus",
+  "name": "feliz-bundle-stylus",
   "version": "0.0.8",
   "description": "A plugin for feliz.js that enables stylus rendering.",
   "main": "lib/index.js",
@@ -13,10 +13,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/gikmx/feliz-stylus"
+    "url": "https://github.com/gikmx/feliz-bundle-stylus"
   },
   "bugs": {
-    "url": "https://github.com/gikmx/feliz-stylus/issues"
+    "url": "https://github.com/gikmx/feliz-bundle-stylus/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
