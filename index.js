@@ -1,7 +1,6 @@
 'use strict';
 
-const Joi = require('joi');
-
+const Bundler = require('feliz-bundler');
 const Package = require('./package.json');
 const Handler = require('./handler');
 
@@ -13,24 +12,17 @@ module.exports = {
         }
     },
     when: { 'plugin:stylus': function(){
-        const options = this.options.stylus || {};
-        options.route = options.route || '/static/css';
-        this.server.route({
-            method  : 'GET',
-            path    : `${options.route}/{filename*}`,
-            config  : {
-                validate: {
-                    params: {
-                        filename: Joi
-                            .string()
-                            .min(5)
-                            .required()
-                            .regex(/[^\.]+\.css/)
-                    }
-                }
-            },
-            handler : Handler.bind(this)
-        })
+
+        if (!this.util.is(this.options.stylus).object()) this.options.stylus = {};
+        const options = this.util
+            .object({
+                index: 'view',
+                ext  : { target:'css', source:'styl' },
+                route: '/static',
+                callback: Handler
+            })
+            .merge(this.options.stylus);
+        Bundler.call(this, options);
     }}
 };
 
