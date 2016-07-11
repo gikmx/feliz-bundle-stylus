@@ -1,6 +1,6 @@
 {
   "name": "feliz-bundle-stylus",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "A plugin for feliz.js that enables stylus rendering.",
   "main": "lib/index.js",
   "author": "Héctor Menéndez <etor@gik.mx>",
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "boom": "^3.2.2",
-    "feliz.bundler": "0.0.2",
+    "feliz.bundler": "0.0.3",
     "rxjs": "^5.0.0-beta.10",
     "stylus": "^0.54.5"
   }
